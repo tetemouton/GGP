@@ -6,16 +6,9 @@ library(scales)
 library(grid)
 
 tmpdir <- "C:/Users/SamM/Documents/VM_folders/tmp_working/model_runs/set2/Inf0.4-Scl0.61-Strt2014"
-#tmpdir <- "C:/Users/SamM/Documents/VM_folders/tmp_working/model_runs/set3/Inf0.4-Scl0.59-Strt2014_lowM_run504"
-#tmpdir <- "C:/Users/SamM/Documents/VM_folders/tmp_working/model_runs/set3/Inf0.4-Scl0.59-Strt2014_highM_run508"
 
 theme_set(theme_bw())
 
-    #tmpdir <- "C:/Users/SamM/Documents/VM_folders/tmp_working/deterministic_TRPscalar_determination/model_runs/set1/Run_In-0.57-refcase"
-    #tmpdir <- "C:/Users/SamM/Documents/VM_folders/tmp_working/deterministic_TRPscalar_determination/model_runs/Constant_HCR/ConHCR_0.96"
-    #tmpdir <- "C:/Users/SamM/Documents/VM_folders/tmp_working/model_runs/set3/Inf0.4-Scl0.59-Strt2014_lowM_run504"
-    
-    
     setwd(tmpdir)
     load("alb.hcr.summary.storage.RData")
     
@@ -27,8 +20,6 @@ theme_set(theme_bw())
     store$p.above.0.45 <- length(which(store$term.SBSB0 > 0.45))/length(store$term.SBSB0)
         
     save(store, file="alb.hcr.summary.storage.full.RData")
-    
-    #return(store)
     
     y.lim <- 350*1000/store$meanSB0
     modnm <- "Low natural mortality"
@@ -97,8 +88,7 @@ theme_set(theme_bw())
                      Reg = as.character(regions))
 
     pdat$Reg <- factor(pdat$Reg, levels=as.character(c(1,4,7,2,5,8,3,6))) # Reorder the regions so that they are arranged in facet_wrap below to match how they appear on a map
-    #pdat$simno <- as.character(pldat$Sims)
-    
+
     windows(2000,1200)
         plr <- ggplot(pdat, aes(x=Yrqtrs, y=value/1000, fill=simno)) + geom_line(colour=alpha("black", 0.2), size=0.3, show_guide=FALSE) + xlab("Years") + ylab("Adult biomass") +
                      geom_vline(xintercept=2013.75, colour=alpha("red", 0.5), size=0.3) + #ylim(0, 420) + 
