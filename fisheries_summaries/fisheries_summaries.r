@@ -67,9 +67,9 @@ Catch.Plot = function(dat=dat, fishery=1, collist=collist, all.yrs = 1970:2013) 
     }
     
     yr.match <- match(all.yrs, rownames(tab.dat))
-      tab.dat <- data.frame("yr"=as.character(all.yrs), tab.dat[yr.match,],row.names=NULL); names(tab.dat) = c("yr",sort(unique(tmp.dat$FlgFlt)))
-        tab.dat <- melt(tab.dat, id.vars="yr", measure.vars=dimnames(tab.dat)[[2]][-1]); names(tab.dat) = c("yr","Fleet","Nsamples")  # put into long format for plotting
-          Ncol <- ifelse(length(unique(tab.dat$Fleet)) > 16, 2, 1)   # This determines how many columns the legend is - if there are heaps of fleets (e.g. some ps fisheries) then the legend is 2 columns, otherwise just one
+    tab.dat <- data.frame("yr"=as.character(all.yrs), tab.dat[yr.match,],row.names=NULL); names(tab.dat) = c("yr",sort(unique(tmp.dat$FlgFlt)))
+    tab.dat <- melt(tab.dat, id.vars="yr", measure.vars=dimnames(tab.dat)[[2]][-1]); names(tab.dat) = c("yr","Fleet","Nsamples")  # put into long format for plotting
+    Ncol <- ifelse(length(unique(tab.dat$Fleet)) > 16, 2, 1)   # This determines how many columns the legend is - if there are heaps of fleets (e.g. some ps fisheries) then the legend is 2 columns, otherwise just one
     
       p <- ggplot(data=tab.dat, aes(x=yr, y=Nsamples/1000, fill=Fleet)) +   # Divide by 1000 to keep the y scale managable
                   geom_bar(stat="identity") +
