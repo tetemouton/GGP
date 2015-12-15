@@ -36,7 +36,7 @@ plot.timeseries.catch = function(catdat = "ALB15/catch.rep", repfile = read.rep(
   
   pl <- ggplot(dat, aes(x = year, y = tcatch/1000, fill = gear)) + geom_bar(stat="identity", width=brwidth) +
     geom_bar(stat="identity", width=brwidth, colour="black", show_guide=FALSE) + scale_fill_manual(name = "gear", values = collist) +# scale_colour_manual(name = "gear", values = collist) +
-    xlab('Year') + scale_y_continuous(expand = c(0,0), name = "Catch (1,000's mt)") +
+    xlab('Year') + scale_y_continuous(expand = c(0.01,0), name = "Catch (1,000's mt)") +
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
           legend.text = element_text(size=leg.txt.sz),
           legend.title = element_blank(),
