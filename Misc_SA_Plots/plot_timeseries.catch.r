@@ -3,13 +3,13 @@ plot.timeseries.catch = function(catdat = "ALB15/catch.rep", repfile = read.rep(
                                  all.regions = TRUE, leg.txt.sz = 12, leg.box.sz = 0.4, brwidth = 0.9, legpos = c(0.05, 0.9),
                                  collist = setNames(c("darkslateblue","firebrick3","lawngreen"), c("L","T","O")))
 {
-
-require(reshape2)
-require(ggplot2)
-require(dplyr)
-require(magrittr)
-require(grid)
-
+  
+  require(reshape2)
+  require(ggplot2)
+  require(dplyr)
+  require(magrittr)
+  require(grid)
+  
   theme_set(theme_bw())
   
   nfsh <- length(gear)
@@ -28,23 +28,24 @@ require(grid)
   dat$year <- floor(dat$yrqtr)
   
   if(all.regions){
-      dat %<>% group_by(year, gear) %>% summarise(tcatch = sum(catch))
+    dat %<>% group_by(year, gear) %>% summarise(tcatch = sum(catch))
   } else {
-      dat %<>% group_by(year, region, gear) %>% summarise(tcatch = sum(catch))  
+    dat %<>% group_by(year, region, gear) %>% summarise(tcatch = sum(catch))  
   }
   
   
   pl <- ggplot(dat, aes(x = year, y = tcatch/1000, fill = gear)) + geom_bar(stat="identity", width=brwidth) +
-               geom_bar(stat="identity", width=brwidth, colour="black", show_guide=FALSE) + scale_fill_manual(name = "gear", values = collist) +# scale_colour_manual(name = "gear", values = collist) +
-               xlab('Year') + scale_y_continuous(expand = c(0,0), name = "Catch (1,000's MT)") +
-               theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                     legend.text = element_text(size=leg.txt.sz),
-                     legend.title=element_blank(),
-                     legend.position=legpos,
-                     legend.key.size =  unit(leg.box.sz, "cm"))
+    geom_bar(stat="identity", width=brwidth, colour="black", show_guide=FALSE) + scale_fill_manual(name = "gear", values = collist) +# scale_colour_manual(name = "gear", values = collist) +
+    xlab('Year') + scale_y_continuous(expand = c(0,0), name = "Catch (1,000's mt)") +
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          legend.text = element_text(size=leg.txt.sz),
+          legend.title = element_blank(),
+          legend.position = legpos,
+          legend.key.size =  unit(leg.box.sz, "cm")) +
+    guides(fill = guide_legend(reverse=TRUE))
   
   if(!all.regions) pl <- pl + facet_wrap(~ region, ncol=nocls)
   
   print(pl)
-
+  
 }
